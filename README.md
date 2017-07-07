@@ -1,5 +1,7 @@
 # sensor-exporter
-Prometheus exporter for sensor data like temperature and fan speed.  
+Prometheus exporter for sensor data like temperature and fan speed.
+
+This version has been edited to look at 172.17.0.1 (Docker host) for connection to the hddtemp daemon.
 
 ## Inputs
 
