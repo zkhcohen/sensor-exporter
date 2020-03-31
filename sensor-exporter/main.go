@@ -12,8 +12,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ncabatoff/gosensors"
+	"github.com/md14454/gosensors"
 	"github.com/prometheus/client_golang/prometheus"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -66,7 +67,7 @@ func main() {
 	lmscollector.Init()
 	prometheus.MustRegister(lmscollector)
 
-	http.Handle(*metricsPath, prometheus.Handler())
+	http.Handle(*metricsPath, promhttp.Handler())
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`<html>
@@ -161,16 +162,15 @@ func (h *HddCollector) Init() error {
 }
 
 func (h *HddCollector) readTempsFromConn() (string, error) {
-	if h.conn == nil {
-		if err := h.Init(); err != nil {
-			return "", err
-		}
+	if err := h.Init(); err != nil {
+		return "", err
 	}
-
+    h.buf.Reset()
 	_, err := io.Copy(&h.buf, h.conn)
 	if err != nil {
 		return "", fmt.Errorf("Error reading from hddtemp socket: %v", err)
 	}
+	h.conn.Close()
 	return h.buf.String(), nil
 }
 
