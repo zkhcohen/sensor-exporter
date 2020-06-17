@@ -12,7 +12,7 @@ RUN apt-get update && apt-get --yes install libsensors4-dev && apt-get clean && 
 RUN go get github.com/md14454/gosensors github.com/prometheus/client_golang/prometheus && go install github.com/ncabatoff/sensor-exporter
 
 # Run the output command by default when the container starts.
-ENV HDDTEMP_HOSTNAME=localhost
+ENV HDDTEMP_HOSTNAME=172.17.0.1
 ENTRYPOINT /go/bin/sensor-exporter -hddtemp-address $HDDTEMP_HOSTNAME:7634
 
 # Document that the service listens on port 9255.
