@@ -53,7 +53,7 @@ func main() {
 	var (
 		listenAddress  = flag.String("web.listen-address", ":9255", "Address on which to expose metrics and web interface.")
 		metricsPath    = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
-		hddtempAddress = flag.String("hddtemp-address", "localhost:7634", "Address to fetch hdd metrics from.")
+		hddtempAddress = flag.String("hddtemp-address", "10.0.10.6:7634", "Address to fetch hdd metrics from.")
 	)
 	flag.Parse()
 
